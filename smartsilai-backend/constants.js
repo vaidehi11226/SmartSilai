@@ -7,7 +7,8 @@ const Measurement_config={
     Female: {
         Kurti: ["Length", "Bust", "Waist", "Hip", "Shoulder", "Sleeve"],
         Blouse: ["Length", "Bust", "Upper Bust", "Front Neck", "Back Neck", "Shoulder"],
-        Salwar: ["Length", "Waist", "Hip", "Bottom"]
+        Salwar: ["Length", "Waist", "Hip", "Bottom"],
+        Dress: ["Length", "Bust", "Waist", "Hip", "Shoulder", "Sleeve"]
     },
     Unisex: {
         Mask: ["Width", "Height"],
