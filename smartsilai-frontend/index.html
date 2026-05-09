@@ -15,7 +15,21 @@
 <div id="measurementInputsContainer" style="margin-top: 20px;"></div>
 
 
-
 <button type="button" id="submitBtn" onclick="saveMeasurements()" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">
     Save Measurements
 </button>
+
+<button type="button" onclick="clearMeasurements()" style="background-color: #ff4d4d; color: white;">
+    Clear All Data
+</button>
+
+<div id="savedDisplay" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; display: none;">
+    <h3>Saved Measurements:</h3>
+    <p id="displayContent"></p>
+</div>
+
+<div id="jobCard" style="display:none; margin-top:30px; border: 2px solid #333; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
+    <h2 style="text-align: center; border-bottom: 1px solid #333;">Order Summary</h2>
+    <div id="cardDetails"></div>
+    <button onclick="window.print()" style="margin-top: 20px; width: 100%;">Print Job Sheet</button>
+</div>
