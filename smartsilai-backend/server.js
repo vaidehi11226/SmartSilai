@@ -1,5 +1,6 @@
 // --- DATABASE CONNECTION TEST ---
 
+
 // Import our custom "Bridge" from the db.js file. 
 // The './' tells Node to look in our current folder for the file named 'db'.
 const pool =require('./db');
@@ -9,6 +10,10 @@ const PORT=5000;
 
 // Essential: This allows Express to read the JSON you send via Thunder Client
 app.use(express.json());
+
+
+const cors = require('cors');
+app.use(cors()); // This allows your frontend to talk to the backend
 
 // We run a simple "Handshake" query. 
 // We ask the database for the current time ('SELECT NOW()') to see if it's awake.
