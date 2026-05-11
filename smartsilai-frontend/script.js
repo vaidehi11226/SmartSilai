@@ -35,60 +35,63 @@ function generateInputs() {
     });
 }
 
-function saveMeasurements() {
+async function saveMeasurements() {
     const container = document.getElementById('measurementInputsContainer');
     const inputs = container.querySelectorAll('input');
+    const selectedItem = document.getElementById('categorySelect').value;
+    
     let measurements = {};
-    let allFilled = true; // Start by assuming everything is fine
+    let allFilled = true;
+
+    // 1. Validation Logic (Keeping your work!)
+    if (inputs.length === 0) {
+        alert('Please select an item first!');
+        return;
+    }
 
     inputs.forEach(input => {
-        // If the box is empty, mark it as not filled
         if (input.value.trim() === "") {
             allFilled = false;
         }
         measurements[input.name] = input.value;
     });
 
-    // 1. First check: Did they even pick a category?
-    if (inputs.length === 0) {
-        alert('Please select an item and generate inputs first!');
-        return;
-    }
-
-    // 2. Second check: Are any of the boxes empty?
     if (!allFilled) {
-        alert('Please fill in ALL measurement fields before saving.');
+        alert('Please fill in ALL fields before saving.');
         return;
     }
 
-    // If we get here, it means everything is perfect!
-    console.log('Saved Measurements:', measurements);
-    localStorage.setItem('userMeasurements', JSON.stringify(measurements));
-    alert('Measurements saved successfully to local storage!');
+    // 2. Database Integration (The Upgrade)
+    const dataToSend = {
+        item_id: 1, // Placeholder: In the future, this will be your Item/Order ID
+        details: measurements 
+    };
 
+    try {
+        const response = await fetch('http://localhost:5000/api/measurements', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataToSend)
+        });
 
-    // ... (inside saveMeasurements, after localStorage.setItem)
-
-const jobCard = document.getElementById('jobCard');
-const cardDetails = document.getElementById('cardDetails');
-
-// Build the content for the card
-let detailsHTML = `
-    <p><strong>Customer:</strong> ${measurements.customerName}</p>
-    <p><strong>Date:</strong> ${measurements.orderDate}</p>
-    <hr>
-`;
-
-// Add each measurement to the card
-for (const [key, value] of Object.entries(measurements)) {
-    if (key !== 'customerName' && key !== 'orderDate') {
-        detailsHTML += `<p><strong>${key.toUpperCase()}:</strong> ${value} inches</p>`;
+        if (response.ok) {
+            alert("Data saved directly to Database!");
+            
+            // 3. Update Job Card (Keeping your UI work!)
+            const cardDetails = document.getElementById('cardDetails');
+            let detailsHTML = `<h4>${selectedItem} Details</h4><hr>`;
+            
+            for (const [key, value] of Object.entries(measurements)) {
+                detailsHTML += `<p><strong>${key.toUpperCase()}:</strong> ${value} inches</p>`;
+            }
+            
+            cardDetails.innerHTML = detailsHTML;
+            document.getElementById('jobCard').style.display = 'block';
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to connect to the server. Is your server.js running?");
     }
-}
-
-cardDetails.innerHTML = detailsHTML;
-jobCard.style.display = 'block'; // Show the card!
-
 }
 
 

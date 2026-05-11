@@ -283,6 +283,21 @@ app.get('/search_phone/:phone', async (req, res) => {
     }
 });
 
+app.post('/api/measurements', async (req, res) => {
+    const { item_id, details } = req.body;
+    try {
+        // This matches your 'measurements' table in image_432c1f.png
+        const result = await pool.query(
+            'INSERT INTO measurements (item_id, details) VALUES ($1, $2) RETURNING *',
+            [item_id, JSON.stringify(details)]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+    }
+});
+
 //The code inside the () => { ... } is a callback function.
 //  It only runs once the server is successfully "attached" to the port.
 //listen is mandatory to start the server and see it in specified port.
