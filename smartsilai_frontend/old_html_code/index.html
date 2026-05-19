@@ -1,0 +1,67 @@
+<div style="margin-bottom: 20px; background: #eef2f3; padding: 15px; border-radius: 5px;">
+    <div style="margin-bottom: 10px;">
+        <label><strong>Bill Number:</strong></label>
+        <input type="text" id="billNumber" readonly style="background: #ddd; font-weight: bold;">
+        <button type="button" onclick="generateBillNumber()">Generate New Bill</button>
+    </div>
+    <div>
+        <label><strong>Customer Name:</strong></label>
+        <input type="text" id="customerName" placeholder="Enter customer name">
+    </div>
+</div>
+
+<hr style="margin: 20px 0; border:0; border-top: 1px dashed #ccc;">
+
+<div style="margin-bottom: 15px;">
+    <label for="categorySelect"><strong>Select Item:</strong></label>
+    <select id="categorySelect" onchange="generateInputs()">
+        <option value="">-- Choose an item --</option>
+        <option value="Shirt">Shirt</option>
+        <option value="Pants">Pants</option>
+        <option value="Dress">Dress</option>
+        <option value="Kurti">Kurti</option>
+        <option value="Blouse">Blouse</option>
+        <option value="Salwar">Salwar</option>
+        <option value="Mask">Mask</option>
+        <option value="Scarf">Scarf</option>
+    </select>
+</div>
+
+<div id="measurementInputsContainer" style="margin-top: 20px;"></div>
+
+<div style="margin-top: 20px; margin-bottom: 20px;">
+    <button type="button" id="submitBtn" onclick="saveMeasurements()" style="padding: 10px 20px; cursor: pointer;">
+        Save Measurements
+    </button>
+    <button type="button" onclick="clearMeasurements()" style="background-color: #ff4d4d; color: white; padding: 10px 20px; cursor: pointer;">
+        Clear All Data
+    </button>
+</div>
+
+<div id="savedDisplay" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; display: none;">
+    <h3>Saved Measurements:</h3>
+    <p id="displayContent"></p>
+</div>
+
+<div id="jobCard" style="display:none; margin-top:30px; border: 2px solid #333; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
+    <h2 style="text-align: center; border-bottom: 1px solid #333;">Order Summary</h2>
+    <div id="cardDetails"></div>
+    <button type="button" onclick="window.print()" style="margin-top: 20px; width: 100%;">Print Job Sheet</button>
+</div>
+
+<div id="historySection" style="margin-top: 30px;">
+    <h3>Recent Saved Measurements</h3>
+    <button type="button" onclick="loadHistory()">Refresh History</button>
+    <table border="1" id="historyTable" style="width:100%; margin-top:10px; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #ddd;">
+                <th>ID</th>
+                <th>Item</th>
+                <th>Measurements</th>
+            </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+    </table>
+</div>
+
+<script src="script.js"></script>
